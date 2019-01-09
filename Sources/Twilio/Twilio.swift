@@ -10,30 +10,14 @@ public protocol TwilioProvider: Service {
 
 public struct Twilio: TwilioProvider {
     public enum Error: Debuggable {
-
         /// Encoding problem
         case encodingProblem
-
-        /// Failed authentication
-        case authenticationFailed
-
-        /// Failed to send email (with error message)
-        case unableToSendEmail(ErrorResponse)
-
-        /// Generic error
-        case unknownError(Response)
 
         /// Identifier
         public var identifier: String {
             switch self {
             case .encodingProblem:
                 return "mailgun.encoding_error"
-            case .authenticationFailed:
-                return "mailgun.auth_failed"
-            case .unableToSendEmail:
-                return "mailgun.send_email_failed"
-            case .unknownError:
-                return "mailgun.unknown_error"
             }
         }
 
@@ -42,12 +26,6 @@ public struct Twilio: TwilioProvider {
             switch self {
             case .encodingProblem:
                 return "Encoding problem"
-            case .authenticationFailed:
-                return "Failed authentication"
-            case .unableToSendEmail(let err):
-                return "Failed to send email (\(err.message))"
-            case .unknownError:
-                return "Generic error"
             }
         }
     }
@@ -90,13 +68,7 @@ public struct Twilio: TwilioProvider {
             "https://api.twilio.com/2010-04-01/Accounts/\(self.accountId)/Messages.json",
             headers: headers
         ) { request in
-            let text = OutgoingSMS(
-                body: "Hello!",
-                from: "+18316100806",
-                to: "+14083688346"
-            )
-
-            try request.content.encode(text, as: MediaType.urlEncodedForm)
+            try request.content.encode(sms, as: MediaType.urlEncodedForm)
         }
     }
 }
@@ -106,15 +78,13 @@ public struct Twilio: TwilioProvider {
 fileprivate extension Twilio {
     func encode(accountId: String, accountSecret: String) throws -> String {
         guard let apiKeyData = "\(accountId):\(accountSecret)".data(using: .utf8) else {
-            throw ""
+            throw Error.encodingProblem
         }
         let authKey = apiKeyData.base64EncodedData()
         guard let authKeyEncoded = String.init(data: authKey, encoding: .utf8) else {
-            throw ""
+            throw Error.encodingProblem
         }
 
         return authKeyEncoded
     }
 }
-
-extension String: Error { }
