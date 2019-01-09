@@ -7,7 +7,6 @@ public protocol TwilioProvider: Service {
 }
 
 // MARK: - Engine
-
 public struct Twilio: TwilioProvider {
     public enum Error: Debuggable {
         /// Encoding problem
@@ -17,7 +16,7 @@ public struct Twilio: TwilioProvider {
         public var identifier: String {
             switch self {
             case .encodingProblem:
-                return "mailgun.encoding_error"
+                return "twilio.encoding_error"
             }
         }
 
@@ -40,11 +39,12 @@ public struct Twilio: TwilioProvider {
     public var accountId: String
     public var accountSecret: String
 
+
     /// Initializer
     ///
     /// - Parameters:
-    ///   - apiKey: API key including "key-" prefix
-    ///   - domain: API domain
+    ///   - accountId: Account ID provided by Twilio
+    ///   - accountSecret: Account secret provided by Twilio
     public init(accountId: String, accountSecret: String) {
         self.accountId = accountId
         self.accountSecret = accountSecret
@@ -52,10 +52,10 @@ public struct Twilio: TwilioProvider {
 
     // MARK: Send message
 
-    /// Send message
+    /// Send sms
     ///
     /// - Parameters:
-    ///   - content: Message
+    ///   - content: outgoing sms
     ///   - container: Container
     /// - Returns: Future<Response>
     public func send(_ sms: OutgoingSMS, on container: Container) throws -> Future<Response> {
