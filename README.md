@@ -44,3 +44,23 @@ let sms = OutgoingSMS(body: "Hey There", from: "+15556100806", to: "+15553688346
 
 return try twilio.send(sms, on: req)
 ```
+
+### Handling Incoming Texts
+After [setting up the necessary routing within your Twilio account](https://www.twilio.com/docs/sms/twiml#twilios-request-to-your-application), you may create routes to handle and respond to incoming texts.
+
+```swift
+router.post("incoming") { (req) -> Response in
+    // This object will give you access to all of the properties of incoming texts
+    let sms = try req.content.syncDecode(IncomingSMS.self)
+
+    let twilio  = try req.make(Twilio.self)
+
+    // You may respond with as many texts as you'd like
+    let responseMessage = SMSResponse(
+        Message(body: "Hello Friend!"),
+        Message(body: "This is a second text.")
+    )
+
+    return twilio.respond(with: responseMessage, on: req)
+}
+```
