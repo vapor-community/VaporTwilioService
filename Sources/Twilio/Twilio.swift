@@ -71,6 +71,10 @@ public struct Twilio: TwilioProvider {
             try request.content.encode(sms, as: MediaType.urlEncodedForm)
         }
     }
+
+    public func respond(with response: SMSResponse, on req: Request) -> Response {
+        return req.response(response.generateTwiml(), as: MediaType.xml)
+    }
 }
 
 // MARK: Private
