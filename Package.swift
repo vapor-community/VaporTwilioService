@@ -17,6 +17,6 @@ let package = Package(
         .target(name: "Twilio", dependencies: ["Vapor"]),
         .target(name: "App", dependencies: ["Vapor", "Twilio"]),
         .target(name: "Run", dependencies: ["App"]),
-        .testTarget(name: "AppTests", dependencies: ["App"])
+        .testTarget(name: "AppTests", dependencies: ["Twilio"])
     ]
 )

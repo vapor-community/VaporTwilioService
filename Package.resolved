@@ -38,24 +38,6 @@
         }
       },
       {
-        "package": "Fluent",
-        "repositoryURL": "https://github.com/vapor/fluent.git",
-        "state": {
-          "branch": null,
-          "revision": "00b81a9362549facb8e2ac93b17d2a78599fce3b",
-          "version": "3.1.2"
-        }
-      },
-      {
-        "package": "FluentSQLite",
-        "repositoryURL": "https://github.com/vapor/fluent-sqlite.git",
-        "state": {
-          "branch": null,
-          "revision": "c32f5bda84bf4ea691d19afe183d40044f579e11",
-          "version": "3.0.0"
-        }
-      },
-      {
         "package": "HTTP",
         "repositoryURL": "https://github.com/vapor/http.git",
         "state": {
@@ -89,24 +71,6 @@
           "branch": null,
           "revision": "281a70b69783891900be31a9e70051b6fe19e146",
           "version": "1.0.0"
-        }
-      },
-      {
-        "package": "SQL",
-        "repositoryURL": "https://github.com/vapor/sql.git",
-        "state": {
-          "branch": null,
-          "revision": "839cf96eba296d26151ff1d7a746e9fe35053584",
-          "version": "2.2.0"
-        }
-      },
-      {
-        "package": "SQLite",
-        "repositoryURL": "https://github.com/vapor/sqlite.git",
-        "state": {
-          "branch": null,
-          "revision": "ad2e9bc9f0ed00ef2c6a05f89c1cec605467c90f",
-          "version": "3.1.0"
         }
       },
       {
