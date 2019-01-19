@@ -22,7 +22,11 @@ This is a wrapper service for interacting with the Twilio API
 ## Installation
 
 ```swift
+  // dependencies
  .package(url: "https://github.com/twof/VaporTwilioService.git", from: "1.0.0")
+ 
+  // Targets
+  .target(name: "App", dependencies: ["Twilio"])
 ```
 
 ## Usage
