@@ -64,7 +64,8 @@ public struct Twilio: TwilioProvider {
         var headers = HTTPHeaders([])
         headers.add(name: HTTPHeaderName.authorization, value: "Basic \(authKeyEncoded)")
 
-        return try container.client().post(
+        let client: Client = try container.make()
+        return client.post(
             "https://api.twilio.com/2010-04-01/Accounts/\(self.accountId)/Messages.json",
             headers: headers
         ) { request in
