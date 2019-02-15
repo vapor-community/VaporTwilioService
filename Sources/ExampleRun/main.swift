@@ -1,3 +1,3 @@
-import App
+import ExampleApp
 
 try app(.detect()).run()
