@@ -15,7 +15,7 @@ public struct Message: Verb {
         return """
         <Message>
             <Body>
-                \(body)
+                \(body.xmlEscaped)
             </Body>
         </Message>
         """
