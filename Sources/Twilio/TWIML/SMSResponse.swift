@@ -28,6 +28,10 @@ public struct SMSResponse: TwimlGenerator {
     public init(_ verbs: Verb...) {
         self.verbs = verbs
     }
+    
+    public init(_ verbs: [Verb]) {
+        self.verbs = verbs
+    }
 
     public func generateTwiml() -> String {
         return """
