@@ -69,4 +69,22 @@ final class TWIMLTests: XCTestCase {
         
         XCTAssertEqual(smsResponseWithMessage.generateTwiml(), expectedTwiml)
     }
+    
+    func testSMSResponseForEscapedBody() throws {
+        let message = Message(body: "enemy<goblin>")
+        let smsResponseWithMessage = SMSResponse(message)
+        
+        let expectedTwiml = """
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <Response>
+            <Message>
+            <Body>
+                enemy&lt;goblin&gt;
+            </Body>
+        </Message>
+        </Response>
+        """
+        
+        XCTAssertEqual(smsResponseWithMessage.generateTwiml(), expectedTwiml)
+    }
 }
