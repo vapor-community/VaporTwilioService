@@ -87,4 +87,27 @@ final class TWIMLTests: XCTestCase {
         
         XCTAssertEqual(smsResponseWithMessage.generateTwiml(), expectedTwiml)
     }
+    
+    func testLongMessageForSplit() throws {
+        let message = Message(body: "Hello world we're looking for multiple messages", maxMessageLength: 32)
+        let smsResponseWithMessage = SMSResponse(message)
+        
+        let expectedTwiml = """
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <Response>
+            <Message>
+            <Body>
+                Hello world we&#39;re looking f
+            </Body>
+        </Message>
+        <Message>
+            <Body>
+                or multiple messages
+            </Body>
+        </Message>
+        </Response>
+        """
+        
+        XCTAssertEqual(smsResponseWithMessage.generateTwiml(), expectedTwiml)
+    }
 }

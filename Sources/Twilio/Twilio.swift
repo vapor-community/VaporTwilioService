@@ -39,7 +39,6 @@ public struct Twilio: TwilioProvider {
     public var accountId: String
     public var accountSecret: String
 
-
     /// Initializer
     ///
     /// - Parameters:
@@ -75,6 +74,18 @@ public struct Twilio: TwilioProvider {
 
     public func respond(with response: SMSResponse, on req: Request) -> Response {
         return req.response(response.generateTwiml(), as: MediaType.xml)
+    }
+    
+    public func longResponse(
+        incomingSMS: IncomingSMS,
+        outgoingMessages: [String],
+        on req: Request
+    ) throws -> Future<Response> {
+        return try outgoingMessages
+            .map { OutgoingSMS(body: $0, from: incomingSMS.to, to: incomingSMS.from) }
+            .map { try self.send($0, on: req) }
+            .flatten(on: req)
+            .transform(to: req.response(SMSResponse().generateTwiml(), as: MediaType.xml))
     }
 }
 
