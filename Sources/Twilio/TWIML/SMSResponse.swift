@@ -14,31 +14,14 @@ public struct Message: Verb {
     }
 
     public func generateTwiml() -> String {
-        let processedBody = body.xmlEscaped
-        
-        // There's a character limit on twilio messages
-        let preprocessed: String = processedBody.enumerated().map { (offset, element) in
-            let altered: String = ((offset + 1) % self.maxMessageLength == 0) ? "🔤" + String(element) : String(element)
-            return altered
-        }.joined()
-        let strings = preprocessed.split(separator: "🔤")
-        let messages = strings
-            .map { generateSingleMessage(body: $0)}
-            .joined(separator: "\n")
-        
-        return messages
-    }
-    
-    fileprivate func generateSingleMessage<T: StringProtocol>(body: T) -> String {
-        let single = """
-        <Message>
-            <Body>
-                \(body)
-            </Body>
-        </Message>
-        """
-        
-        return single
+        return
+"""
+    <Message>
+        <Body>
+            \(body.xmlEscaped)
+        </Body>
+    </Message>
+"""
     }
 }
 
@@ -54,11 +37,12 @@ public struct SMSResponse: TwimlGenerator {
     }
 
     public func generateTwiml() -> String {
-        return """
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <Response>
-            \(verbs.map { $0.generateTwiml() }.joined(separator: "\n"))
-        </Response>
-        """
+        return
+"""
+<?xml version="1.0" encoding="UTF-8" ?>
+<Response>
+\(verbs.map { $0.generateTwiml() }.joined(separator: "\n"))
+</Response>
+"""
     }
 }

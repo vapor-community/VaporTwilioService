@@ -5,25 +5,27 @@ final class TWIMLTests: XCTestCase {
     func testSMSResponse() throws {
         let smsResponse = SMSResponse()
         
-        let expectedTwiml = """
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <Response>
-            
-        </Response>
-        """
+        let expectedTwiml =
+"""
+<?xml version="1.0" encoding="UTF-8" ?>
+<Response>
+
+</Response>
+"""
         
         XCTAssertEqual(smsResponse.generateTwiml(), expectedTwiml)
     }
     
     func testMessage() throws {
         let message = Message(body: "Hello!")
-        let expectedTwiml = """
-        <Message>
-            <Body>
-                Hello!
-            </Body>
-        </Message>
-        """
+        let expectedTwiml =
+"""
+    <Message>
+        <Body>
+            Hello!
+        </Body>
+    </Message>
+"""
         
         XCTAssertEqual(message.generateTwiml(), expectedTwiml)
     }
@@ -36,10 +38,10 @@ final class TWIMLTests: XCTestCase {
         <?xml version="1.0" encoding="UTF-8" ?>
         <Response>
             <Message>
-            <Body>
-                Hello!
-            </Body>
-        </Message>
+                <Body>
+                    Hello!
+                </Body>
+            </Message>
         </Response>
         """
         
@@ -55,15 +57,15 @@ final class TWIMLTests: XCTestCase {
         <?xml version="1.0" encoding="UTF-8" ?>
         <Response>
             <Message>
-            <Body>
-                Hello
-            </Body>
-        </Message>
-        <Message>
-            <Body>
-                world!
-            </Body>
-        </Message>
+                <Body>
+                    Hello
+                </Body>
+            </Message>
+            <Message>
+                <Body>
+                    world!
+                </Body>
+            </Message>
         </Response>
         """
         
@@ -78,33 +80,10 @@ final class TWIMLTests: XCTestCase {
         <?xml version="1.0" encoding="UTF-8" ?>
         <Response>
             <Message>
-            <Body>
-                enemy&lt;goblin&gt;
-            </Body>
-        </Message>
-        </Response>
-        """
-        
-        XCTAssertEqual(smsResponseWithMessage.generateTwiml(), expectedTwiml)
-    }
-    
-    func testLongMessageForSplit() throws {
-        let message = Message(body: "Hello world we're looking for multiple messages", maxMessageLength: 32)
-        let smsResponseWithMessage = SMSResponse(message)
-        
-        let expectedTwiml = """
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <Response>
-            <Message>
-            <Body>
-                Hello world we&#39;re looking f
-            </Body>
-        </Message>
-        <Message>
-            <Body>
-                or multiple messages
-            </Body>
-        </Message>
+                <Body>
+                    enemy&lt;goblin&gt;
+                </Body>
+            </Message>
         </Response>
         """
         
