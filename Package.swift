@@ -1,8 +1,11 @@
-// swift-tools-version:4.0
+// swift-tools-version:5.1
 import PackageDescription
 
 let package = Package(
     name: "Twilio",
+    platforms: [
+       .macOS(.v10_15)
+    ],
     products: [
         // Products define the executables and libraries produced by a package, and make them visible to other packages.
         .library(
@@ -11,7 +14,7 @@ let package = Package(
         ],
     dependencies: [
         // 💧 A server-side Swift web framework.
-        .package(url: "https://github.com/vapor/vapor.git", from: "3.0.0")
+        .package(url: "https://github.com/vapor/vapor.git", from: "4.0.0-beta.3")
     ],
     targets: [
         .target(name: "Twilio", dependencies: ["Vapor"]),
