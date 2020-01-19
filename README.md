@@ -51,6 +51,9 @@ func configure(_ app: Application) throws {
 }
 ```
 ### Sending a text
+
+#### In route handler
+
 ```swift
 import Twilio
 
@@ -58,6 +61,21 @@ func routes(_ app: Application) throws {
     app.get { req -> EventLoopFuture<ClientResponse> in
         let sms = OutgoingSMS(body: "Hey There", from: "+18316100806", to: "+14083688346")
         return req.twilio.send(sms)
+    }
+}
+```
+
+#### Anywhere else
+
+```swift
+import Twilio
+
+public func configure(_ app: Application) throws {
+    // ...
+    // e.g. in the very end
+    let sms = OutgoingSMS(body: "Hey There", from: "+18316100806", to: "+14083688346")
+    app.twilio.send(sms).whenSuccess { response in
+        print("just sent: \(response)")
     }
 }
 ```
