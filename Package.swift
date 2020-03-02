@@ -17,9 +17,18 @@ let package = Package(
         .package(url: "https://github.com/vapor/vapor.git", from: "4.0.0-rc")
     ],
     targets: [
-        .target(name: "Twilio", dependencies: ["Vapor"]),
-        .target(name: "ExampleApp", dependencies: ["Vapor", "Twilio"]),
-        .target(name: "ExampleRun", dependencies: ["ExampleApp"]),
-        .testTarget(name: "TwilioTests", dependencies: ["Twilio"])
+        .target(name: "Twilio", dependencies: [
+            .product(name: "Vapor", package: "vapor"),
+        ]),
+        .target(name: "ExampleApp", dependencies: [
+            .product(name: "Twilio", package: "Twilio"),
+            .product(name: "Vapor", package: "vapor"),
+        ]),
+        .target(name: "ExampleRun", dependencies: [
+            .product(name: "ExampleApp", package: "ExampleApp"),
+        ]),
+        .testTarget(name: "TwilioTests", dependencies: [
+            .product(name: "Twilio", package: "Twilio"),
+        ])
     ]
 )
