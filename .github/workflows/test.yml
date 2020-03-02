@@ -1,16 +1,16 @@
 name: test
 on: [push, pull_request]
 jobs:
-  xenial:
+  vapor_xenial:
     container:
-      image: nightly-5.2-bionic
+      image: vapor/swift:5.2-xenial
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
     - run: swift test --enable-test-discovery --sanitize=thread
-  bionic:
+  vapor_bionic:
     container:
-      image: nightly-5.2-bionic
+      image: vapor/swift:5.2-bionic
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
