@@ -2,7 +2,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "Twilio",
+    name: "VaporTwilioService",
     platforms: [
        .macOS(.v10_15)
     ],

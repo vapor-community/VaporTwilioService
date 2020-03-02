@@ -24,11 +24,14 @@ This is a wrapper service for interacting with the Twilio API for Vapor4
 ## Installation
 
 ```swift
-  // dependencies
- .package(url: "https://github.com/twof/VaporTwilioService.git", from: "2.0.0")
- 
-  // Targets
-  .target(name: "App", dependencies: ["Twilio"])
+// dependencies
+.package(url: "https://github.com/twof/VaporTwilioService.git", from: "2.0.0")
+
+// Targets
+.target(name: "App", dependencies: [
+    .product(name: "Vapor", package: "vapor"),
+    .product(name: "Twilio", package: "VaporTwilioService")
+])
 ```
 
 ## Usage
