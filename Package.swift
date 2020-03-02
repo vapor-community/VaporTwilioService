@@ -21,14 +21,14 @@ let package = Package(
             .product(name: "Vapor", package: "vapor"),
         ]),
         .target(name: "ExampleApp", dependencies: [
-            .product(name: "Twilio", package: "Twilio"),
+            .target(name: "Twilio"),
             .product(name: "Vapor", package: "vapor"),
         ]),
         .target(name: "ExampleRun", dependencies: [
-            .product(name: "ExampleApp", package: "ExampleApp"),
+            .target(name: "ExampleApp"),
         ]),
         .testTarget(name: "TwilioTests", dependencies: [
-            .product(name: "Twilio", package: "Twilio"),
+            .target(name: "Twilio"),
         ])
     ]
 )
