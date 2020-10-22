@@ -83,6 +83,19 @@ public func configure(_ app: Application) throws {
 }
 ```
 
+### Lookup phone number
+
+```swift
+import Twilio
+
+func routes(_ app: Application) throws {
+    app.get("lookup") { req -> EventLoopFuture<LookupResponse> in
+        let phoneNumber = "+18316100806"
+        return req.twilio.lookup(phoneNumber)
+    }
+}
+```
+
 ### Handling Incoming Texts
 After [setting up the necessary routing within your Twilio account](https://www.twilio.com/docs/sms/twiml#twilios-request-to-your-application), you may create routes to handle and respond to incoming texts.
 

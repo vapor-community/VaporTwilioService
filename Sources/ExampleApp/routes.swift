@@ -12,7 +12,7 @@ func routes(_ app: Application) throws {
     }
 
     app.get("lookup") { req -> EventLoopFuture<LookupResponse> in
-        let phoneNumber = "+41 (0) 79 226 42 28"//"+18316100806"
+        let phoneNumber = "+18316100806"
         return req.twilio.lookup(phoneNumber)
     }
 
