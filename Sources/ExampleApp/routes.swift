@@ -11,6 +11,11 @@ func routes(_ app: Application) throws {
         return req.twilio.send(sms)
     }
 
+    app.get("lookup") { req -> EventLoopFuture<LookupResponse> in
+        let phoneNumber = "+18316100806"
+        return req.twilio.lookup(phoneNumber)
+    }
+
     app.post("incoming") { req -> Response in
         let sms = try req.content.decode(IncomingSMS.self)
 

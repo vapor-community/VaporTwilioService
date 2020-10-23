@@ -56,6 +56,37 @@ extension Twilio {
         }
     }
 
+    /// Lookup phone number
+    ///
+    /// - Parameters:
+    ///   - number: The number to look up
+    /// - Returns: EventLoopFuture<LookupResponse>
+    public func lookup(_ number: String) -> EventLoopFuture<LookupResponse> {
+        guard let configuration = self.configuration else {
+            fatalError("Twilio not configured. Use app.twilio.configuration = ...")
+        }
+
+        return application.eventLoopGroup.future().flatMapThrowing { _ -> HTTPHeaders in
+            let authKeyEncoded = try self.encode(accountId: configuration.accountId, accountSecret: configuration.accountSecret)
+            var headers = HTTPHeaders()
+            headers.add(name: .authorization, value: "Basic \(authKeyEncoded)")
+            return headers
+        }.flatMap { headers in
+            let trimmedNumber = number.filter { !$0.isWhitespace }
+            let twilioURI = URI(string: "https://lookups.twilio.com/v1/PhoneNumbers/\(trimmedNumber)?Type=carrier")
+            return self.application.client.get(twilioURI, headers: headers).flatMapThrowing { response in
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                do {
+                    return try response.content.decode(LookupResponse.self, using: decoder)
+                } catch {
+                    throw Abort(.notFound, reason: "The requested resource \(number) was not found.")
+                }
+
+            }
+        }
+    }
+
     public func respond(with response: SMSResponse) -> Response {
         var headers = HTTPHeaders()
         headers.add(name: .contentType, value: "application/xml")
@@ -66,6 +97,7 @@ extension Twilio {
 // MARK: Private
 
 fileprivate extension Twilio {
+
     func encode(accountId: String, accountSecret: String) throws -> String {
         guard let apiKeyData = "\(accountId):\(accountSecret)".data(using: .utf8) else {
             throw TwilioError.encodingProblem
