@@ -2,7 +2,7 @@ import Vapor
 
 public struct CarrierResponse: Content {
 
-    enum CarrierType: String, Codable {
+    public enum CarrierType: String, Codable {
         case mobile
         case landline
         case voip
