@@ -1,8 +1,8 @@
 import Vapor
 
 public struct LookupResponse: Content {
-    let countryCode: String
-    let phoneNumber: String
-    let nationalFormat: String
-    let carrier: CarrierResponse
+    public let countryCode: String
+    public let phoneNumber: String
+    public let nationalFormat: String
+    public let carrier: CarrierResponse
 }

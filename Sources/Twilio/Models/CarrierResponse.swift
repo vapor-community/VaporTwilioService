@@ -8,6 +8,6 @@ public struct CarrierResponse: Content {
         case voip
     }
 
-    let name: String
-    let type: CarrierType
+    public let name: String
+    public let type: CarrierType
 }
