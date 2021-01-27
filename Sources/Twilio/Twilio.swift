@@ -1,7 +1,7 @@
 import Vapor
 
 public protocol TwilioProvider {
-    func send(_ sms: OutgoingSMS) -> EventLoopFuture<ClientResponse>
+    func send(_ sms: OutgoingSMS, on eventLoop: EventLoopGroup?) -> EventLoopFuture<ClientResponse>
 }
 
 public struct Twilio: TwilioProvider {
@@ -32,18 +32,18 @@ extension Twilio {
 // MARK: Send message
 
 extension Twilio {
-    /// Send sms
+    /// Send sms. If you are sending SMS as result of network request, you need to use Request.eventLoop to send SMS, or your Vapor app is going to crash.
     ///
     /// - Parameters:
-    ///   - content: outgoing sms
-    ///   - container: Container
+    ///   - sms: outgoing sms
+    ///   - eventLoop: EventLoop, on which SMS needs to be sent. Defaults to Application.eventLoopGroup.
     /// - Returns: Future<Response>
-    public func send(_ sms: OutgoingSMS) -> EventLoopFuture<ClientResponse> {
+    public func send(_ sms: OutgoingSMS, on eventLoop: EventLoopGroup? = nil) -> EventLoopFuture<ClientResponse> {
         guard let configuration = self.configuration else {
             fatalError("Twilio not configured. Use app.twilio.configuration = ...")
         }
         
-        return application.eventLoopGroup.future().flatMapThrowing { _ -> HTTPHeaders in
+        return (eventLoop ?? application.eventLoopGroup).future().flatMapThrowing { _ -> HTTPHeaders in
             let authKeyEncoded = try self.encode(accountId: configuration.accountId, accountSecret: configuration.accountSecret)
             var headers = HTTPHeaders()
             headers.add(name: .authorization, value: "Basic \(authKeyEncoded)")
