@@ -1,5 +1,5 @@
 
-<a href="http://docs.vapor.codes/3.0/">
+<a href="http://docs.vapor.codes/">
     <img src="http://img.shields.io/badge/read_the-docs-2196f3.svg" alt="Documentation">
 </a>
 <a href="https://discord.gg/vapor">
@@ -8,10 +8,6 @@
 <a href="LICENSE">
     <img src="http://img.shields.io/badge/license-MIT-brightgreen.svg" alt="MIT License">
 </a>
-<a href="https://circleci.com/gh/vapor/api-template">
-    <img src="https://circleci.com/gh/vapor/api-template.svg?style=shield" alt="Continuous Integration">
-</a>
-<img src="https://img.shields.io/github/workflow/status/twof/VaporTwilioService/test" alt="Github Actions">
 <a href="https://swift.org">
     <img src="http://img.shields.io/badge/swift-5.1-brightgreen.svg" alt="Swift 5.1">
 </a>
@@ -25,7 +21,7 @@ This is a wrapper service for interacting with the Twilio API for Vapor4
 
 ```swift
 // dependencies
-.package(url: "https://github.com/twof/VaporTwilioService.git", from: "2.0.0")
+.package(url: "https://github.com/vapor-community/VaporTwilioService.git", from: "4.0.0")
 
 // Targets
 .target(name: "App", dependencies: [
